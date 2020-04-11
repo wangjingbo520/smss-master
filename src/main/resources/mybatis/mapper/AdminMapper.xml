@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smss.mapper.AdminMapper">
+
+    <select id="queryAllUserInfo" resultType="UserInfo">
+        select * from person
+    </select>
+
+    <select id="querUserByName" resultType="UserInfo">
+          select * from person where username=#{username}
+     </select>
+
+    <select id="querUserById" resultType="UserInfo">
+          select * from person where user_id=#{user_id}
+     </select>
+
+
+    <select id="querAdminByAdminName" resultType="AdminBean">
+        select * from admin where admin_name=#{admin_name}
+    </select>
+
+    <select id="querAdminByAdminNameAndPasswod" resultType="AdminBean">
+        select * from admin where admin_name=#{admin_name} and admin_password=#{admin_password}
+    </select>
+
+    <update id="updateOpening" parameterType="UserInfo">
+          update person SET opening=#{opening},start_date=#{start_date},remaining_day=#{remaining_day},
+          end_date=#{end_date} where password=#{password} and username=#{username}
+      </update>
+
+    <update id="updateAdminLogin" parameterType="AdminBean">
+          update admin SET admin_login_status=#{admin_login_status}
+          where admin_password=#{admin_password} and admin_name=#{admin_name}
+      </update>
+
+    <update id="reSetOpenning">
+          update person SET opening=0,remaining_day=0,start_date='0-0-0', end_date='0-0-0' where username=#{username}
+      </update>
+
+    <select id="getAdvices" resultType="AdviceBean">
+        select * from advice
+    </select>
+
+    <select id="queryKsmsInfo" resultType="UpdatasBean">
+        select * from ksms
+    </select>
+
+    <select id="queryCamiloList" resultType="CamiloBean">
+        select * from camilolist where type=#{type} and status=#{status}
+    </select>
+
+    <select id="queryOneCamilo" resultType="CamiloBean">
+        select * from camilolist where type=#{type} and status=#{status} limit 1
+    </select>
+
+    <select id="queryCamiloAll" resultType="CamiloBean">
+        select * from camilolist
+    </select>
+
+    <insert id="insertCamilolist" parameterType="java.util.List" useGeneratedKeys="false">
+        insert into camilolist(camilo,type,status,fileName) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.camilo},
+            #{item.type},
+            #{item.status},
+            #{item.fileName})
+        </foreach>
+    </insert>
+
+
+    <select id="queryFileIsExist" resultType="CamiloBean">
+        select * from camilolist where fileName=#{fileName} limit 1
+    </select>
+
+
+</mapper>

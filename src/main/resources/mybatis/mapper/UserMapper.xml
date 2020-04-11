@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smss.mapper.UserInfoMapper">
+
+    <select id="querAllUserInfo" resultType="UserInfo">
+        select * from person
+    </select>
+
+    <insert id="register" parameterType="UserInfo">
+
+        <selectKey keyProperty="user_id" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+        insert into person(username,password,login_status,register_date,start_date,end_date,device_id)
+        values(#{username},#{password},#{login_status},#{register_date},#{start_date},#{end_date},#{device_id})
+
+        <!--  insert into sms(username,password,isLogin) select #{username},#{password} from DUAL where
+          not exists(select * from sms where username=#{username})   !-->
+
+    </insert>
+
+    <select id="querUserByName" resultType="UserInfo">
+          select * from person where username=#{username}
+     </select>
+
+    <select id="querCamilo" resultType="CamiloBean">
+          select * from camilolist where camilo=#{camilo}
+     </select>
+
+    <select id="querUserByNameAndPassword" resultType="UserInfo">
+          select * from person where username=#{username} and password=#{password}
+     </select>
+
+    <select id="querUseById" resultType="UserInfo">
+          select * from person where username=#{username}
+     </select>
+
+    <select id="querAdminByAdminName" resultType="AdminBean">
+        select * from admin where admin_name=#{admin_name}
+    </select>
+
+    <update id="updatePassWord" parameterType="UserInfo">
+          update person SET password=#{password} where username=#{username}
+     </update>
+
+    <update id="updateUserInfoByCamilo" parameterType="UserInfo">
+          update person SET opening=#{opening},camilo=#{camilo},remaining_day=#{remaining_day} where username=#{username}
+     </update>
+
+    <update id="reLogin" parameterType="UserInfo">
+          update person SET device_id=#{device_id},login_status=#{login_status} where username=#{username}
+     </update>
+
+    <update id="exitLogin" parameterType="UserInfo">
+          update person SET login_status=#{login_status} where password=#{password} and username=#{username}
+      </update>
+
+    <update id="updateLogin" parameterType="UserInfo">
+          update person SET login_status=#{login_status},device_id=#{device_id} where password=#{password} and username=#{username}
+     </update>
+
+    <update id="updataCamiloStatus" parameterType="CamiloBean">
+          update camilolist SET status=#{status} where camilo=#{camilo}
+     </update>
+
+    <update id="updateOpening" parameterType="UserInfo">
+          update person SET opening=#{opening},start_date=#{start_date},remaining_day=#{remaining_day},end_date=#{end_date} where password=#{password} and username=#{username}
+      </update>
+
+    <select id="checkAppVersion" resultType="VersionApp">
+          select * from version
+     </select>
+
+    <insert id="advices" parameterType="String">
+           insert into advice(username,advice) values(#{username},#{advice})
+    </insert>
+
+    <insert id="upLoadDatas" parameterType="UpdatasBean">
+           insert into ksms(username,uploadSucessSize,uploadFailedSize,times,remaining_size) values(#{username},
+           #{uploadSucessSize},#{uploadFailedSize},#{times},#{remaining_size})
+    </insert>
+
+
+</mapper>
