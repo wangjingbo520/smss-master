@@ -17,7 +17,6 @@ public class Constants {
     //微信支付商户平台
     public static final String WEIXIN_PAY_MCH_ID = "";
 
-
     //一个月使用期限
     public static final int DAY_USE_ONE = 1;
     //两个月使用期限
