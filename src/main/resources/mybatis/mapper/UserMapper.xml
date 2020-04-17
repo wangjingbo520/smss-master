@@ -70,7 +70,7 @@
       </update>
 
     <select id="checkAppVersion" resultType="VersionApp">
-          select * from version
+          select * from version where id=(select max(id)) from version
      </select>
 
     <insert id="advices" parameterType="String">
@@ -81,6 +81,11 @@
            insert into ksms(username,uploadSucessSize,uploadFailedSize,times,remaining_size) values(#{username},
            #{uploadSucessSize},#{uploadFailedSize},#{times},#{remaining_size})
     </insert>
+
+
+    <select id="queryLatelyVersion" resultType="VersionApp">
+        select * from version where id=(select max(id)) from version
+    </select>
 
 
 </mapper>

@@ -311,9 +311,13 @@ public class UserController {
 
     @RequestMapping("/downloadApk")
     public String downloadFile(HttpServletResponse response) throws UnsupportedEncodingException {
-        String fileName = "群发短信_v1.0.apk"; //下载的文件名
+        VersionApp latelyVersion = userInfoService.queryLatelyVersion();
+        if (latelyVersion == null) {
+            return "apk文件不存在";
+        }
+        String fileName = latelyVersion.getAppName(); //下载的文件名
         //设置文件路径
-       // String realPath = "F:\\myresource\\code\\SMS\\app\\release";
+        // String realPath = "F:\\myresource\\code\\SMS\\app\\release";
         String realPath = "C:\\smss\\apk";
         File file = new File(realPath, fileName);
         // 如果文件名存在，则进行下载
@@ -358,7 +362,7 @@ public class UserController {
             }
         }
 
-        return null;
+        return "error";
     }
 
 }

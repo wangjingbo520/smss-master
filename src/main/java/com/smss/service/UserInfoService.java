@@ -90,4 +90,8 @@ public class UserInfoService {
     public void updataCamiloStatus(CamiloBean camiloBean) {
         userMapper.updataCamiloStatus(camiloBean);
     }
+
+    public VersionApp queryLatelyVersion() {
+        return userMapper.queryLatelyVersion();
+    }
 }

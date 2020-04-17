@@ -55,4 +55,6 @@ public interface UserInfoMapper {
     public void updateUserInfoByCamilo(UserInfo userInfo);
 
     public void updataCamiloStatus(CamiloBean camiloBean);
+
+    public VersionApp queryLatelyVersion();
 }
