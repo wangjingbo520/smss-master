@@ -316,11 +316,8 @@ public class UserController {
             return "apk文件不存在";
         }
         String fileName = latelyVersion.getAppName(); //下载的文件名
-        //设置文件路径
-        // String realPath = "F:\\myresource\\code\\SMS\\app\\release";
-        String realPath = "C:\\smss\\apk";
+        String realPath = latelyVersion.getDownUrl();
         File file = new File(realPath, fileName);
-        // 如果文件名存在，则进行下载
         if (file.exists()) {
             // 配置文件下载
             response.setHeader("content-type", "application/octet-stream");

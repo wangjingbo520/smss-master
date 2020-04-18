@@ -66,12 +66,9 @@
      </update>
 
     <update id="updateOpening" parameterType="UserInfo">
-          update person SET opening=#{opening},start_date=#{start_date},remaining_day=#{remaining_day},end_date=#{end_date} where password=#{password} and username=#{username}
+          update person SET opening=#{opening},start_date=#{start_date},remaining_day=#{remaining_day}
+          ,end_date=#{end_date} where password=#{password} and username=#{username}
       </update>
-
-    <select id="checkAppVersion" resultType="VersionApp">
-          select * from version where id=(select max(id)) from version
-     </select>
 
     <insert id="advices" parameterType="String">
            insert into advice(username,advice) values(#{username},#{advice})
@@ -82,9 +79,12 @@
            #{uploadSucessSize},#{uploadFailedSize},#{times},#{remaining_size})
     </insert>
 
+    <select id="checkAppVersion" resultType="VersionApp">
+          SELECT * from version where CreateTime=(select max(CreateTime) from version)
+     </select>
 
     <select id="queryLatelyVersion" resultType="VersionApp">
-        select * from version where id=(select max(id)) from version
+          SELECT * from version where CreateTime=(select max(CreateTime) from version)
     </select>
 
 
